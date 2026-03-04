@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>All Measurements</title>
+		<link rel="stylesheet" href="/static/style.css">
+	</head>
+	<body>
+		<h1>All Measurements</h1>
+		<table>
+			<thead>
+				<tr>
+					<th>Timestamp</th>
+					<th>Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for measurement in measurements %}
+				<tr>
+					<td>{{ measurement.timestamp }}</td>
+					<td>{{ measurement.value }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<div class="navigation">
+			<a href="index.html">Back to Front Page</a>
+		</div>
+	</body>
+</html>

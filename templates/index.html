@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Front Page</title>
+		<link rel="stylesheet" href="/static/style.css">
+	</head>
+	<body>
+		<div class="statistics">
+			<h1>Statistics</h1>
+			<p>Last measurement: {{ last_measurement }}</p>
+			<p>Maximum measurement: {{ max_measurement }}</p>
+			<p>Minimum measurement: {{ min_measurement }}</p>
+		</div>
+
+		<div class="navigation">
+			<a href="measurementsList.html">View Measurements</a>
+		</div>
+	</body>
+</html>
