@@ -11,21 +11,23 @@
 			<thead>
 				<tr>
 					<th>Timestamp</th>
-					<th>Value</th>
+					<th>TVOC Value</th>
+					<th>eCO2 Value</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for measurement in measurements %}
 				<tr>
 					<td>{{ measurement.timestamp }}</td>
-					<td>{{ measurement.value }}</td>
+					<td>{{ measurement.TVOC }}</td>
+					<td>{{ measurement.eCO2 }}</td>
 				</tr>
 				{% endfor %}
 			</tbody>
 		</table>
 
 		<div class="navigation">
-			<a href="index.html">Back to Front Page</a>
+			<a href="{{ url_for('index') }}">Back to Front Page</a>
 		</div>
 	</body>
 </html>
