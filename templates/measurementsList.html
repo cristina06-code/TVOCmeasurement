@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<title>All Measurements</title>
 		<link rel="stylesheet" href="/static/style.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 	<body>
 		<h1>All Measurements</h1>
@@ -11,8 +12,8 @@
 			<thead>
 				<tr>
 					<th>Timestamp</th>
-					<th>TVOC Value</th>
-					<th>eCO2 Value</th>
+					<th>TVOC</th>
+					<th>eCO2</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -26,8 +27,10 @@
 			</tbody>
 		</table>
 
-		<div class="navigation">
-			<a href="{{ url_for('index') }}">Back to Front Page</a>
-		</div>
+		<footer>
+			<a href="{{ url_for('index') }}" class="btn">
+				<i class="fa fa-home"></i>
+			</a>
+		</footer>
 	</body>
 </html>

@@ -4,17 +4,45 @@
 		<meta charset="UTF-8">
 		<title>Front Page</title>
 		<link rel="stylesheet" href="/static/style.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 	<body>
 		<div class="statistics">
 			<h1>Statistics</h1>
-			<p>Last measurement: {{ last_measurement }}</p>
-			<p>Maximum measurement: {{ max_measurement }}</p>
-			<p>Minimum measurement: {{ min_measurement }}</p>
+			<table>
+				<tr>
+					<th>Measurement</th>
+					<th>TVOC Value</th>
+					<th>eCO2 Value</th>
+					<th>Timestamp</th>
+				</tr>
+				{% if last_measurement and highest_measurement and lowest_measurement %}
+				<tr>
+					<td>Last Measurement</td>
+					<td>{{ last_measurement.TVOC }}</td>
+					<td>{{ last_measurement.eCO2 }}</td>
+					<td>{{ last_measurement.timestamp }}</td>
+				</tr>
+				<tr>
+					<td>Highest measurement</td>
+					<td>{{ highest_measurement.TVOC }}</td>
+					<td>{{ highest_measurement.eCO2 }}</td>
+					<td>{{ highest_measurement.timestamp }}</td>
+				</tr>
+				<tr>
+					<td>Lowest measurement</td>
+					<td>{{ lowest_measurement.TVOC }}</td>
+					<td>{{ lowest_measurement.eCO2 }}</td>
+					<td>{{ lowest_measurement.timestamp }}</td>
+				</tr>
+				{% endif %}
+			</table>
 		</div>
 
-		<div class="navigation">
-			<a href="{{ url_for('measurements_list') }}">View Measurements</a>
-		</div>
+		<footer>
+			<a href="{{ url_for('measurements_list') }}" class="btn">
+				<i class="fa fa-folder"></i>
+			</a>
+		</footer>
 	</body>
 </html>

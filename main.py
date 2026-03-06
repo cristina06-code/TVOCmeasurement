@@ -9,20 +9,27 @@ app.secret_key = 'assignment#5'
 create_database()
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
-    '''Handle the main page and form submission'''
-    errors = []
-    if request.method == 'POST':
-        TVOC = request.form.get('TVOC')
-        eCO2 = request.form.get('eCO2')
-        timestamp = request.form.get('timestamp')
-    return render_template('index.html', errors=errors)
+    '''Handle the main page'''
+    last_measurement = {
+        'TVOC': 300, 'eCO2': 400, 'timestamp': '06.03.2026 12.23'}
+    highest_measurement = {
+        'TVOC': 500, 'eCO2': 600, 'timestamp': '05.03.2026 11.00'}
+    lowest_measurement = {
+        'TVOC': 100, 'eCO2': 200, 'timestamp': '04.03.2026 10.00'
+    }
+    return render_template('index.html', last_measurement=last_measurement, highest_measurement=highest_measurement, lowest_measurement=lowest_measurement)
 
 
-@app.route('/measurements')
+@app.route('/measurements', methods=['GET'])
 def measurements_list():
-    measurements = get_entries()
+    '''Display the list of measurements'''
+    measurements = [
+        {'TVOC': 300, 'eCO2': 400, 'timestamp': '06.03.2026 12.23'},
+        {'TVOC': 500, 'eCO2': 600, 'timestamp': '05.03.2026 11.00'},
+        {'TVOC': 100, 'eCO2': 200, 'timestamp': '04.03.2026 10.00'}
+    ]
     return render_template('measurementsList.html', measurements=measurements)
 
 
