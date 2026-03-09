@@ -16,7 +16,7 @@
 					<th>eCO2 Value</th>
 					<th>Timestamp</th>
 				</tr>
-				{% if last_measurement and highest_measurement and lowest_measurement %}
+				{% if last_measurement and highest_TVOC_measurement and lowest_TVOC_measurement  and highest_eCO2_measurement and lowest_eCO2_measurement %}
 				<tr>
 					<td>Last Measurement</td>
 					<td>{{ last_measurement.TVOC }}</td>
@@ -24,16 +24,28 @@
 					<td>{{ last_measurement.timestamp }}</td>
 				</tr>
 				<tr>
-					<td>Highest measurement</td>
-					<td>{{ highest_measurement.TVOC }}</td>
-					<td>{{ highest_measurement.eCO2 }}</td>
-					<td>{{ highest_measurement.timestamp }}</td>
+					<td>Highest ECO2 measurement</td>
+					<td>{{ highest_eCO2_measurement.TVOC }}</td>
+					<td>{{ highest_eCO2_measurement.eCO2 }}</td>
+					<td>{{ highest_eCO2_measurement.timestamp }}</td>
 				</tr>
 				<tr>
-					<td>Lowest measurement</td>
-					<td>{{ lowest_measurement.TVOC }}</td>
-					<td>{{ lowest_measurement.eCO2 }}</td>
-					<td>{{ lowest_measurement.timestamp }}</td>
+					<td>Highest TVOC measurement</td>
+					<td>{{ highest_TVOC_measurement.TVOC }}</td>
+					<td>{{ highest_TVOC_measurement.eCO2 }}</td>
+					<td>{{ highest_TVOC_measurement.timestamp }}</td>
+				</tr>
+				<tr>
+					<td>Lowest ECO2 measurement</td>
+					<td>{{ lowest_eCO2_measurement.TVOC }}</td>
+					<td>{{ lowest_eCO2_measurement.eCO2 }}</td>
+					<td>{{ lowest_eCO2_measurement.timestamp }}</td>
+				</tr>
+				<tr>
+					<td>Lowest TVOC measurement</td>
+					<td>{{ lowest_TVOC_measurement.TVOC }}</td>
+					<td>{{ lowest_TVOC_measurement.eCO2 }}</td>
+					<td>{{ lowest_TVOC_measurement.timestamp }}</td>
 				</tr>
 				{% endif %}
 			</table>

@@ -64,26 +64,48 @@ def get_last_measurement():
     return last_measurement
 
 
-def get_highest_measurement():
+def get_highest_TVOC_measurement():
     """Get the measurement with the highest TVOC value"""
     conn = create_connection()
     cur = conn.cursor()
 
     cur.execute('SELECT * FROM entries ORDER BY TVOC DESC LIMIT 1')
-    highest_measurement = cur.fetchone()
+    highest_TVOC_measurement = cur.fetchone()
     conn.close()
-    return highest_measurement
+    return highest_TVOC_measurement
 
 
-def get_lowest_measurement():
+def get_highest_eCO2_measurement():
+    """Get the measurement with the highest eCO2 value"""
+    conn = create_connection()
+    cur = conn.cursor()
+
+    cur.execute('SELECT * FROM entries ORDER BY eCO2 DESC LIMIT 1')
+    highest_eCO2_measurement = cur.fetchone()
+    conn.close()
+    return highest_eCO2_measurement
+
+
+def get_lowest_TVOC_measurement():
     """Get the measurement with the lowest TVOC value"""
     conn = create_connection()
     cur = conn.cursor()
 
     cur.execute('SELECT * FROM entries ORDER BY TVOC ASC LIMIT 1')
-    lowest_measurement = cur.fetchone()
+    lowest_TVOC_measurement = cur.fetchone()
     conn.close()
-    return lowest_measurement
+    return lowest_TVOC_measurement
+
+
+def get_lowest_eCO2_measurement():
+    """Get the measurement with the lowest eCO2 value"""
+    conn = create_connection()
+    cur = conn.cursor()
+
+    cur.execute('SELECT * FROM entries ORDER BY eCO2 ASC LIMIT 1')
+    lowest_eCO2_measurement = cur.fetchone()
+    conn.close()
+    return lowest_eCO2_measurement
 
 
 def get_all_measurements():
@@ -95,3 +117,12 @@ def get_all_measurements():
     measurements = cur.fetchall()
     conn.close()
     return measurements
+
+
+# conn = create_connection()
+# cur = conn.cursor()
+
+# cur.executemany('INSERT INTO entries (TVOC, eCO2, timestamp) VALUES (?,?,?)', [
+#     (300, 400, '06.03.2026 12.23'), (500, 600, '05.03.2026 11.00'), (100, 200, '04.03.2026 10.00'), (50, 230, '03.03.2026 09.00')])
+# conn.commit()
+# cur.close()
