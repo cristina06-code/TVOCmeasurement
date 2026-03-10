@@ -41,3 +41,5 @@ nextBtn.onclick = function () {
 };
 
 showPage(currentPage);
+
+setInterval(() => window.location.reload(), 6000);
