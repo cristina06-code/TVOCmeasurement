@@ -31,11 +31,14 @@ def measurements_list():
 @app.route('/add_measurement', methods=['POST'])
 def add_measurement():
     '''Handle the form submission for adding a new measurement'''
-    TVOC = request.form.get('TVOC')
-    eCO2 = request.form.get('eCO2')
-    timestamp = request.form.get('timestamp')
+    data = request.get_json()
+    if not data:
+        return "Invalid JSON data", 400
 
-    if not TVOC or not eCO2 or not timestamp:
+    TVOC = data.get('TVOC')
+    eCO2 = data.get('eCO2')
+
+    if TVOC is None or eCO2 is None:
         return "Missing required fields", 400
 
     try:
@@ -43,6 +46,9 @@ def add_measurement():
         eCO2 = int(eCO2)
     except ValueError:
         return "TVOC and eCO2 must be numbers", 400
+
+    from datetime import datetime
+    timestamp = datetime.now().isoformat()
 
     success = database.insert_measurement(TVOC, eCO2, timestamp)
     if success:
@@ -52,4 +58,4 @@ def add_measurement():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3000, debug=True)
+    app.run(debug=True)
