@@ -8,48 +8,82 @@
 	</head>
 	<body>
 		<div class="statistics">
+
 			<h1>Statistics</h1>
-			<table>
-				<tr>
-					<th>Measurement</th>
-					<th>TVOC Value</th>
-					<th>eCO2 Value</th>
-					<th>Timestamp</th>
-				</tr>
-				{% if last_measurement and highest_TVOC_measurement and lowest_TVOC_measurement  and highest_eCO2_measurement and lowest_eCO2_measurement %}
-				<tr>
-					<td>Last Measurement</td>
-					<td>{{ last_measurement.TVOC }}</td>
-					<td>{{ last_measurement.eCO2 }}</td>
-					<td>{{ last_measurement.timestamp }}</td>
-				</tr>
-				<tr>
-					<td>Highest ECO2 measurement</td>
-					<td>{{ highest_eCO2_measurement.TVOC }}</td>
-					<td>{{ highest_eCO2_measurement.eCO2 }}</td>
-					<td>{{ highest_eCO2_measurement.timestamp }}</td>
-				</tr>
-				<tr>
-					<td>Highest TVOC measurement</td>
-					<td>{{ highest_TVOC_measurement.TVOC }}</td>
-					<td>{{ highest_TVOC_measurement.eCO2 }}</td>
-					<td>{{ highest_TVOC_measurement.timestamp }}</td>
-				</tr>
-				<tr>
-					<td>Lowest ECO2 measurement</td>
-					<td>{{ lowest_eCO2_measurement.TVOC }}</td>
-					<td>{{ lowest_eCO2_measurement.eCO2 }}</td>
-					<td>{{ lowest_eCO2_measurement.timestamp }}</td>
-				</tr>
-				<tr>
-					<td>Lowest TVOC measurement</td>
-					<td>{{ lowest_TVOC_measurement.TVOC }}</td>
-					<td>{{ lowest_TVOC_measurement.eCO2 }}</td>
-					<td>{{ lowest_TVOC_measurement.timestamp }}</td>
-				</tr>
-				{% endif %}
-			</table>
+
+			{% if last_measurement %}
+
+			<!-- last measurement table -->
+			<div class="last-measurement">
+				<h2>Latest Measurement</h2>
+				<table>
+					<tr>
+						<th>TVOC</th>
+						<th>eCO2</th>
+						<th>Timestamp</th>
+					</tr>
+					<tr>
+						<td>{{ last_measurement.TVOC }}</td>
+						<td>{{ last_measurement.eCO2 }}</td>
+						<td>{{ last_measurement.timestamp }}</td>
+					</tr>
+				</table>
+			</div>
+
+			<!-- maximum and minimum measurements tables -->
+			<div class="stats-container">
+
+				<!-- minimum table -->
+				<div class="min-table">
+					<h2>Minimum Values</h2>
+					<table>
+						<tr>
+							<th>Measurement</th>
+							<th>Value</th>
+							<th>Timestamp</th>
+						</tr>
+
+						<tr>
+							<td>TVOC</td>
+							<td>{{ lowest_TVOC_measurement.TVOC }}</td>
+							<td>{{ lowest_TVOC_measurement.timestamp }}</td>
+						</tr>
+
+						<tr>
+							<td>eCO2</td>
+							<td>{{ lowest_eCO2_measurement.eCO2 }}</td>
+							<td>{{ lowest_eCO2_measurement.timestamp }}</td>
+						</tr>
+					</table>
+				</div>
+
+				<!-- maximum table -->
+				<div class="max-table">
+					<h2>Maximum Values</h2>
+					<table>
+						<tr>
+							<th>Measurement</th>
+							<th>Value</th>
+							<th>Timestamp</th>
+						</tr>
+
+						<tr>
+							<td>TVOC</td>
+							<td>{{ highest_TVOC_measurement.TVOC }}</td>
+							<td>{{ highest_TVOC_measurement.timestamp }}</td>
+						</tr>
+
+						<tr>
+							<td>eCO2</td>
+							<td>{{ highest_eCO2_measurement.eCO2 }}</td>
+							<td>{{ highest_eCO2_measurement.timestamp }}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
 		</div>
+
+		{% endif %}
 
 		<footer>
 			<a href="{{ url_for('measurements_list') }}" class="btn">

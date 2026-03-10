@@ -1,6 +1,8 @@
 # from webbrowser import get
 from flask import Flask, render_template, request
 import database
+from datetime import datetime
+
 
 app = Flask(__name__)
 app.secret_key = 'assignment#5'
@@ -12,13 +14,24 @@ database.create_database()
 @app.route('/', methods=['GET'])
 def index():
     '''Handle the main page'''
-    last_measurement = database.get_last_measurement()
-    highest_TVOC_measurement = database.get_highest_TVOC_measurement()
-    highest_eCO2_measurement = database.get_highest_eCO2_measurement()
-    lowest_TVOC_measurement = database.get_lowest_TVOC_measurement()
-    lowest_eCO2_measurement = database.get_lowest_eCO2_measurement()
-    return render_template('index.html', last_measurement=last_measurement, highest_TVOC_measurement=highest_TVOC_measurement,
-                           highest_eCO2_measurement=highest_eCO2_measurement, lowest_TVOC_measurement=lowest_TVOC_measurement, lowest_eCO2_measurement=lowest_eCO2_measurement)
+
+    stats = database.get_statistics()
+
+    return render_template(
+        "index.html",
+        last_measurement=stats["last"],
+        highest_TVOC_measurement=stats["max_TVOC"],
+        lowest_TVOC_measurement=stats["min_TVOC"],
+        highest_eCO2_measurement=stats["max_eCO2"],
+        lowest_eCO2_measurement=stats["min_eCO2"]
+    )
+    # last_measurement = database.get_last_measurement()
+    # highest_TVOC_measurement = database.get_highest_TVOC_measurement()
+    # highest_eCO2_measurement = database.get_highest_eCO2_measurement()
+    # lowest_TVOC_measurement = database.get_lowest_TVOC_measurement()
+    # lowest_eCO2_measurement = database.get_lowest_eCO2_measurement()
+    # return render_template('index.html', last_measurement=last_measurement, highest_TVOC_measurement=highest_TVOC_measurement,
+    #                        highest_eCO2_measurement=highest_eCO2_measurement, lowest_TVOC_measurement=lowest_TVOC_measurement, lowest_eCO2_measurement=lowest_eCO2_measurement)
 
 
 @app.route('/measurements', methods=['GET'])
@@ -47,7 +60,6 @@ def add_measurement():
     except ValueError:
         return "TVOC and eCO2 must be numbers", 400
 
-    from datetime import datetime
     timestamp = datetime.now().isoformat()
 
     success = database.insert_measurement(TVOC, eCO2, timestamp)
@@ -58,4 +70,4 @@ def add_measurement():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=3000, debug=True)

@@ -53,59 +53,93 @@ def insert_measurement(TVOC, eCO2, timestamp):
         return False
 
 
-def get_last_measurement():
-    """Get the last measurement entry"""
+# def get_last_measurement():
+#     """Get the last measurement entry"""
+#     conn = create_connection()
+#     cur = conn.cursor()
+
+#     cur.execute('SELECT * FROM entries ORDER BY timestamp DESC LIMIT 1')
+#     last_measurement = cur.fetchone()
+#     conn.close()
+#     return last_measurement
+
+
+# def get_highest_TVOC_measurement():
+#     """Get the measurement with the highest TVOC value"""
+#     conn = create_connection()
+#     cur = conn.cursor()
+
+#     cur.execute(
+#         'SELECT * FROM entries WHERE TVOC = (SELECT MAX(TVOC) FROM entries)')
+#     highest_TVOC_measurement = cur.fetchone()
+#     conn.close()
+#     return highest_TVOC_measurement
+
+
+# def get_highest_eCO2_measurement():
+#     """Get the measurement with the highest eCO2 value"""
+#     conn = create_connection()
+#     cur = conn.cursor()
+
+#     cur.execute(
+#         'SELECT * FROM entries  WHERE eCO2 = (SELECT MAX(eCO2) FROM entries)')
+#     highest_eCO2_measurement = cur.fetchone()
+#     conn.close()
+#     return highest_eCO2_measurement
+
+
+# def get_lowest_TVOC_measurement():
+#     """Get the measurement with the lowest TVOC value"""
+#     conn = create_connection()
+#     cur = conn.cursor()
+
+#     cur.execute(
+#         'SELECT * FROM entries  WHERE TVOC = (SELECT MIN(TVOC) FROM entries)')
+#     lowest_TVOC_measurement = cur.fetchone()
+#     conn.close()
+#     return lowest_TVOC_measurement
+
+
+# def get_lowest_eCO2_measurement():
+#     """Get the measurement with the lowest eCO2 value"""
+#     conn = create_connection()
+#     cur = conn.cursor()
+
+#     cur.execute(
+#         'SELECT * FROM entries  WHERE eCO2 = (SELECT MIN(eCO2) FROM entries)')
+#     lowest_eCO2_measurement = cur.fetchone()
+#     conn.close()
+#     return lowest_eCO2_measurement
+
+def get_statistics():
+    """Return last, min, and max measurements"""
     conn = create_connection()
     cur = conn.cursor()
 
-    cur.execute('SELECT * FROM entries ORDER BY timestamp DESC LIMIT 1')
-    last_measurement = cur.fetchone()
+    stats = {}
+
+    # Last measurement
+    cur.execute("SELECT * FROM entries ORDER BY timestamp DESC LIMIT 1")
+    stats["last"] = cur.fetchone()
+
+    # Highest TVOC
+    cur.execute("SELECT * FROM entries ORDER BY TVOC DESC LIMIT 1")
+    stats["max_TVOC"] = cur.fetchone()
+
+    # Lowest TVOC
+    cur.execute("SELECT * FROM entries ORDER BY TVOC ASC LIMIT 1")
+    stats["min_TVOC"] = cur.fetchone()
+
+    # Highest eCO2
+    cur.execute("SELECT * FROM entries ORDER BY eCO2 DESC LIMIT 1")
+    stats["max_eCO2"] = cur.fetchone()
+
+    # Lowest eCO2
+    cur.execute("SELECT * FROM entries ORDER BY eCO2 ASC LIMIT 1")
+    stats["min_eCO2"] = cur.fetchone()
+
     conn.close()
-    return last_measurement
-
-
-def get_highest_TVOC_measurement():
-    """Get the measurement with the highest TVOC value"""
-    conn = create_connection()
-    cur = conn.cursor()
-
-    cur.execute('SELECT * FROM entries ORDER BY TVOC DESC LIMIT 1')
-    highest_TVOC_measurement = cur.fetchone()
-    conn.close()
-    return highest_TVOC_measurement
-
-
-def get_highest_eCO2_measurement():
-    """Get the measurement with the highest eCO2 value"""
-    conn = create_connection()
-    cur = conn.cursor()
-
-    cur.execute('SELECT * FROM entries ORDER BY eCO2 DESC LIMIT 1')
-    highest_eCO2_measurement = cur.fetchone()
-    conn.close()
-    return highest_eCO2_measurement
-
-
-def get_lowest_TVOC_measurement():
-    """Get the measurement with the lowest TVOC value"""
-    conn = create_connection()
-    cur = conn.cursor()
-
-    cur.execute('SELECT * FROM entries ORDER BY TVOC ASC LIMIT 1')
-    lowest_TVOC_measurement = cur.fetchone()
-    conn.close()
-    return lowest_TVOC_measurement
-
-
-def get_lowest_eCO2_measurement():
-    """Get the measurement with the lowest eCO2 value"""
-    conn = create_connection()
-    cur = conn.cursor()
-
-    cur.execute('SELECT * FROM entries ORDER BY eCO2 ASC LIMIT 1')
-    lowest_eCO2_measurement = cur.fetchone()
-    conn.close()
-    return lowest_eCO2_measurement
+    return stats
 
 
 def get_all_measurements():
@@ -117,12 +151,3 @@ def get_all_measurements():
     measurements = cur.fetchall()
     conn.close()
     return measurements
-
-
-# conn = create_connection()
-# cur = conn.cursor()
-
-# cur.executemany('INSERT INTO entries (TVOC, eCO2, timestamp) VALUES (?,?,?)', [
-#     (300, 400, '06.03.2026 12.23'), (500, 600, '05.03.2026 11.00'), (100, 200, '04.03.2026 10.00'), (50, 230, '03.03.2026 09.00')])
-# conn.commit()
-# cur.close()
