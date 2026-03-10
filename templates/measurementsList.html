@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<h1>All Measurements</h1>
-		<table>
+		<table id="measurements-table">
 			<thead>
 				<tr>
 					<th>Timestamp</th>
@@ -26,11 +26,16 @@
 				{% endfor %}
 			</tbody>
 		</table>
-
+		<div id="pagination">
+			<button id="prevBtn">&lt;</button>
+			<span id="pageInfo"></span>
+			<button id="nextBtn">&gt;</button>
+		</div>
 		<footer>
 			<a href="{{ url_for('index') }}" class="btn">
 				<i class="fa fa-home"></i>
 			</a>
 		</footer>
+		<script src="/static/script.js"></script>
 	</body>
 </html>
