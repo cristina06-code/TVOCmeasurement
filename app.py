@@ -1,8 +1,6 @@
-# from webbrowser import get
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import database
 from datetime import datetime
-
 
 app = Flask(__name__)
 app.secret_key = 'assignment#5'
@@ -25,13 +23,6 @@ def index():
         highest_eCO2_measurement=stats["max_eCO2"],
         lowest_eCO2_measurement=stats["min_eCO2"]
     )
-    # last_measurement = database.get_last_measurement()
-    # highest_TVOC_measurement = database.get_highest_TVOC_measurement()
-    # highest_eCO2_measurement = database.get_highest_eCO2_measurement()
-    # lowest_TVOC_measurement = database.get_lowest_TVOC_measurement()
-    # lowest_eCO2_measurement = database.get_lowest_eCO2_measurement()
-    # return render_template('index.html', last_measurement=last_measurement, highest_TVOC_measurement=highest_TVOC_measurement,
-    #                        highest_eCO2_measurement=highest_eCO2_measurement, lowest_TVOC_measurement=lowest_TVOC_measurement, lowest_eCO2_measurement=lowest_eCO2_measurement)
 
 
 @app.route('/measurements', methods=['GET'])
@@ -60,13 +51,30 @@ def add_measurement():
     except ValueError:
         return "TVOC and eCO2 must be numbers", 400
 
-    timestamp = datetime.now().isoformat()
+# using strftime to format the timestamp in a way that is compatible with SQLite
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     success = database.insert_measurement(TVOC, eCO2, timestamp)
     if success:
         return "Measurement added successfully", 200
     else:
         return "Failed to add measurement", 500
+
+
+@app.route("/api/statistics")
+def api_statistics():
+    stats = database.get_statistics()
+
+    def row_to_dict(row):
+        return dict(row) if row else None
+
+    return jsonify({
+        "latest": row_to_dict(stats["last"]),
+        "min_tvoc": row_to_dict(stats["min_TVOC"]),
+        "max_tvoc": row_to_dict(stats["max_TVOC"]),
+        "min_eco2": row_to_dict(stats["min_eCO2"]),
+        "max_eco2": row_to_dict(stats["max_eCO2"])
+    })
 
 
 if __name__ == '__main__':

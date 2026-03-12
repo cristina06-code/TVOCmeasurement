@@ -26,11 +26,16 @@
 				{% endfor %}
 			</tbody>
 		</table>
+		<!-- Display a message if there are no measurements -->
+		{% if measurements|length == 0 %}
+		<p>No measurements recorded yet.</p>
+		{% else %}
 		<div id="pagination">
 			<button id="prevBtn">&lt;</button>
 			<span id="pageInfo"></span>
 			<button id="nextBtn">&gt;</button>
 		</div>
+		{% endif %}
 		<footer>
 			<a href="{{ url_for('index') }}" class="btn">
 				<i class="fa fa-home"></i>

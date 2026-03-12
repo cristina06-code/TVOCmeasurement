@@ -23,9 +23,9 @@
 						<th>Timestamp</th>
 					</tr>
 					<tr>
-						<td>{{ last_measurement.TVOC }}</td>
-						<td>{{ last_measurement.eCO2 }}</td>
-						<td>{{ last_measurement.timestamp }}</td>
+						<td id="lastTvocValue">{{ last_measurement.TVOC }}</td>
+						<td id="lastEco2Value">{{ last_measurement.eCO2 }}</td>
+						<td id="lastTimestamp">{{ last_measurement.timestamp }}</td>
 					</tr>
 				</table>
 			</div>
@@ -45,14 +45,14 @@
 
 						<tr>
 							<td>TVOC</td>
-							<td>{{ lowest_TVOC_measurement.TVOC }}</td>
-							<td>{{ lowest_TVOC_measurement.timestamp }}</td>
+							<td id="minimumTvocValue">{{ lowest_TVOC_measurement.TVOC }}</td>
+							<td id="minimumTvocTimestamp">{{ lowest_TVOC_measurement.timestamp }}</td>
 						</tr>
 
 						<tr>
 							<td>eCO2</td>
-							<td>{{ lowest_eCO2_measurement.eCO2 }}</td>
-							<td>{{ lowest_eCO2_measurement.timestamp }}</td>
+							<td id="minimumEco2Value">{{ lowest_eCO2_measurement.eCO2 }}</td>
+							<td id="minimumEco2Timestamp">{{ lowest_eCO2_measurement.timestamp }}</td>
 						</tr>
 					</table>
 				</div>
@@ -69,14 +69,14 @@
 
 						<tr>
 							<td>TVOC</td>
-							<td>{{ highest_TVOC_measurement.TVOC }}</td>
-							<td>{{ highest_TVOC_measurement.timestamp }}</td>
+							<td id="maximumTvocValue">{{ highest_TVOC_measurement.TVOC }}</td>
+							<td id="maximumTvocTimestamp">{{ highest_TVOC_measurement.timestamp }}</td>
 						</tr>
 
 						<tr>
 							<td>eCO2</td>
-							<td>{{ highest_eCO2_measurement.eCO2 }}</td>
-							<td>{{ highest_eCO2_measurement.timestamp }}</td>
+							<td id="maximumEco2Value">{{ highest_eCO2_measurement.eCO2 }}</td>
+							<td id="maximumEco2Timestamp">{{ highest_eCO2_measurement.timestamp }}</td>
 						</tr>
 					</table>
 				</div>

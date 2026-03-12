@@ -45,13 +45,13 @@ def insert_measurement(TVOC, eCO2, timestamp):
             "INSERT INTO entries (TVOC, eCO2, timestamp) VALUES (?,?,?)",
             (TVOC, eCO2, timestamp)
         )
-        stringTime = f"{timestamp}"
-        newFormatTime = stringTime.replace("T", " ")
-        newFormatTime = newFormatTime[:-7]
-        cur.execute(
-            "UPDATE entries SET timestamp = ? WHERE id = ?", (
-                newFormatTime, cur.lastrowid)
-        )
+        # stringTime = f"{timestamp}"
+        # newFormatTime = stringTime.replace("T", " ")
+        # newFormatTime = newFormatTime[:-7]
+        # cur.execute(
+        #     "UPDATE entries SET timestamp = ? WHERE id = ?", (
+        #         newFormatTime, cur.lastrowid)
+        # )
         conn.commit()
         conn.close()
         return True
