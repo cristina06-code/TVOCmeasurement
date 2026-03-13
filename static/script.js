@@ -47,12 +47,14 @@ if (table) {
   showPage(currentPage);
 }
 
+// Fetch statistics and update the front page
 function updateStatistics () {
-  fetch('/api/statistics')
+  // Fetch statistics from pythonanywhere
+  fetch(window.location.origin + '/api/statistics')
     .then(response => response.json())
     .then(data => {
+      if (!data.latest) return;
       /* Latest measurement */
-
       document.getElementById('lastTvocValue').innerText =
                 data.latest.TVOC;
 
@@ -63,7 +65,6 @@ function updateStatistics () {
                 new Date(data.latest.timestamp).toLocaleString();
 
       /* Minimum values */
-
       document.getElementById('minimumTvocValue').innerText =
                 data.min_tvoc.TVOC;
 
@@ -77,7 +78,6 @@ function updateStatistics () {
                 new Date(data.min_eco2.timestamp).toLocaleString();
 
       /* Maximum values */
-
       document.getElementById('maximumTvocValue').innerText =
                 data.max_tvoc.TVOC;
 
