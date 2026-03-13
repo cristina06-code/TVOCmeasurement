@@ -50,10 +50,15 @@ if (table) {
 // Fetch statistics and update the front page
 function updateStatistics () {
   // Fetch statistics from pythonanywhere
-  fetch(window.location.origin + '/api/statistics')
-    .then(response => response.json())
-    .then(data => {
+  const xhr = new XMLHttpRequest();
+
+  xhr.open('GET', window.location.origin + '/api/statistics', true);
+
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      const data = JSON.parse(xhr.responseText);
       if (!data.latest) return;
+
       /* Latest measurement */
       document.getElementById('lastTvocValue').innerText =
                 data.latest.TVOC;
@@ -89,8 +94,14 @@ function updateStatistics () {
 
       document.getElementById('maximumEco2Timestamp').innerText =
                 new Date(data.max_eco2.timestamp).toLocaleString();
-    })
-    .catch(error => console.error('Error:', error));
+    }
+  };
+
+  xhr.onerror = function () {
+    console.error('Error fetching statistics');
+  };
+
+  xhr.send();
 }
 
 // setInterval(() => window.location.reload(), 6000);

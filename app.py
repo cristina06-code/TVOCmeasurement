@@ -52,7 +52,8 @@ def add_measurement():
         return "TVOC and eCO2 must be numbers", 400
 
 # using strftime to format the timestamp in a way that is compatible with SQLite
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+    timestamp = datetime.utcnow().isoformat()
 
     success = database.insert_measurement(TVOC, eCO2, timestamp)
     if success:
