@@ -29,31 +29,11 @@
 		<!-- Display a message if there are no measurements -->
 		{% if measurements|length == 0 %}
 		<p>No measurements recorded yet.</p>
-		{% endif %}
-		<!-- Pagination -->
-		{% if total_pages > 1 %}
+		{% else %}
 		<div id="pagination">
-
-  		<!-- Previous -->
-  		{% if current_page > 1 %}
-    	<a href="{{ url_for('measurements_list', page=current_page-1) }}">
-      		<button>&lt;</button>
-    	</a>
-  		{% else %}
-    		<button disabled>&lt;</button>
-  		{% endif %}
-
-  		<span>{{ current_page }} / {{ total_pages }}</span>
-
-  		<!-- Next -->
-  		{% if current_page < total_pages %}
-    		<a href="{{ url_for('measurements_list', page=current_page+1) }}">
-      			<button>&gt;</button>
-    		</a>
-  		{% else %}
-    		<button disabled>&gt;</button>
-  		{% endif %}
-
+			<button id="prevBtn">&lt;</button>
+			<span id="pageInfo"></span>
+			<button id="nextBtn">&gt;</button>
 		</div>
 		{% endif %}
 		<footer>
