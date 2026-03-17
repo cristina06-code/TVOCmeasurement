@@ -27,9 +27,17 @@ def index():
 
 @app.route('/measurements', methods=['GET'])
 def measurements_list():
-    '''Display the list of measurements'''
-    measurements = database.get_all_measurements()
-    return render_template('measurementsList.html', measurements=measurements)
+    '''Display paginated measurements'''
+    page = int(request.args.get('page', 1))
+    limit = 20
+    offset = (page - 1) * limit
+
+    measurements = database.get_measurements_paginated(
+        limit=limit, offset=offset)
+    total_count = database.get_measurements_count()
+
+    total_pages = (total_count + limit - 1) // limit
+    return render_template('measurementsList.html', measurements=measurements, current_page=page, total_pages=total_pages)
 
 
 @app.route('/add_measurement', methods=['POST'])

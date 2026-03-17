@@ -26,8 +26,6 @@ if (table) {
 
     prevBtn.disabled = (currentPage === 1);
     nextBtn.disabled = (currentPage === pageCount);
-    // prevBtn.enabled = (currentPage !== 1);
-    // nextBtn.enabled = (currentPage !== pageCount);
   }
 
   prevBtn.onclick = function () {
@@ -57,7 +55,9 @@ function updateStatistics () {
   xhr.onload = function () {
     if (xhr.status === 200) {
       const data = JSON.parse(xhr.responseText);
+      // Check if data contains the expected properties
       if (!data.latest) return;
+      if (!data.min_tvoc || !data.max_tvoc) return;
 
       /* Latest measurement */
       document.getElementById('lastTvocValue').innerText =
@@ -104,7 +104,6 @@ function updateStatistics () {
   xhr.send();
 }
 
-// setInterval(() => window.location.reload(), 6000);
-
+// Update front page statistics every minute
 updateStatistics();
 setInterval(updateStatistics, 60000);
