@@ -26,8 +26,6 @@ if (table) {
 
     prevBtn.disabled = (currentPage === 1);
     nextBtn.disabled = (currentPage === pageCount);
-    // prevBtn.enabled = (currentPage !== 1);
-    // nextBtn.enabled = (currentPage !== pageCount);
   }
 
   prevBtn.onclick = function () {
@@ -103,8 +101,6 @@ function updateStatistics () {
 
   xhr.send();
 }
-
-// setInterval(() => window.location.reload(), 6000);
 
 updateStatistics();
 setInterval(updateStatistics, 60000);

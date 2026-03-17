@@ -1,3 +1,4 @@
+'''app.py'''
 from flask import Flask, render_template, request, jsonify
 import database
 from datetime import datetime
@@ -64,6 +65,7 @@ def add_measurement():
 
 @app.route("/api/statistics")
 def api_statistics():
+    '''API endpoint to return the latest measurement and statistics'''
     stats = database.get_statistics()
 
     def row_to_dict(row):
