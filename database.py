@@ -1,4 +1,3 @@
-'''A module for handling database operations'''
 import sqlite3
 
 # Creating the connection and database
@@ -101,30 +100,3 @@ def get_all_measurements():
     measurements = cur.fetchall()
     conn.close()
     return measurements
-
-
-def get_measurements_paginated(limit=20, offset=0):
-    """Get paginated measurements"""
-    conn = create_connection()
-    cur = conn.cursor()
-
-    cur.execute(
-        'SELECT * FROM entries ORDER BY timestamp DESC LIMIT ? OFFSET ?',
-        (limit, offset)
-    )
-    rows = cur.fetchall()
-
-    conn.close()
-    return rows
-
-
-def get_measurements_count():
-    """Get total number of measurements"""
-    conn = create_connection()
-    cur = conn.cursor()
-
-    cur.execute("SELECT COUNT(*) as count FROM entries")
-    count = cur.fetchone()["count"]
-
-    conn.close()
-    return count
