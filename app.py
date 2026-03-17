@@ -40,34 +40,33 @@ def measurements_list():
     return render_template('measurementsList.html', measurements=measurements, current_page=page, total_pages=total_pages)
 
 
-@app.route('/add_measurement', methods=['POST'])
+@app.route('/api/measurements', methods=['POST'])
 def add_measurement():
-    '''Handle the form submission for adding a new measurement'''
     data = request.get_json()
     if not data:
-        return "Invalid JSON data", 400
+        return jsonify({"error": "Invalid JSON"}), 400
 
     TVOC = data.get('TVOC')
     eCO2 = data.get('eCO2')
 
     if TVOC is None or eCO2 is None:
-        return "Missing required fields", 400
+        return jsonify({"error": "Missing fields"}), 400
 
     try:
         TVOC = int(TVOC)
         eCO2 = int(eCO2)
     except ValueError:
-        return "TVOC and eCO2 must be numbers", 400
+        return jsonify({"error": "Must be numbers"}), 400
 
 # using strftime to format the timestamp in a way that is compatible with SQLite
-    # timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-    timestamp = datetime.utcnow().isoformat()
+    timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 
     success = database.insert_measurement(TVOC, eCO2, timestamp)
+
     if success:
-        return "Measurement added successfully", 200
+        return jsonify({"status": "success"}), 200
     else:
-        return "Failed to add measurement", 500
+        return jsonify({"error": "Insert failed"}), 500
 
 
 @app.route("/api/statistics")
